@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Greetings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: pink;
+            overflow: hidden;
+            text-align: center;
+        }
+        h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        .valentine-box {
+            font-size: 24px;
+            color: white;
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        .btn-yes, .btn-no {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn-yes {
+            background-color: green;
+            color: white;
+        }
+        .btn-no {
+            background-color: red;
+            color: white;
+            position: absolute;
+        }
+        .message-card {
+            display: none;
+            margin-top: 20px;
+            width: 300px;
+            text-align: center;
+        }
+        .heart {
+            position: fixed;
+            color: red;
+            font-size: 20px;
+            top: -10px;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            from { transform: translateY(-10px); }
+            to { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="valentine-box">Will you be my Valentine? 🌹</div>
+    <div class="buttons">
+        <button class="btn-yes" onclick="showSurprise()">Yes 💖</button>
+        <button class="btn-no" id="noButton">No 💔</button>
+    </div>
+
+    <div class="message-card card">
+        <div class="card-body">
+            <h5 class="card-title">💌 For you 💌</h5>
+            <p class="card-text" id="message-text"></p>
+            <button class="btn btn-primary mt-2" onclick="shuffleMessage()">🔄</button>
+        </div>
+    </div>
+    <audio id="bgMusic" loop>
+        <source src="song/velentines.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <button class="btn btn-warning mt-3" onclick="toggleMusic()">🎵 Listen to Music</button>
+    <script>
+        let messages = [
+            "Mahal kita… parang sahod, mabilis dumaan pero hindi ko mabitawan. 💸❤️",
+            "Ikaw ang google search ko—kasi sa’yo ko na lang hinahanap lahat ng sagot. 🔍😂",
+            "Sana cellphone na lang kita… para lagi kitang hawak at ‘di ko kayang mawala ka. 📱💖",
+            "Mahal kita kahit minsan mas clingy ka pa sa WiFi na mahina ang signal. 📶😆",
+            "Parang kape ka… bitter minsan, pero hindi ko kayang simulan ang araw na wala ka. ☕😂",
+            "Buti pa ang upuan, napansin mo agad. Ako kaya? Kailan? 🪑😢",
+            "Mahal kita, pero minsan parang Shopee checkout… nasa cart lang, hindi pinipili. 🛒💔",
+            "Buti pa ang pera, sinusuyo mo pag nawala. Ako? Iniwan mo na lang bigla. 💰😢",
+            "Parang kuryente pagmamahal ko sa'yo—hindi mo napapansin pero pag nawala, mararamdaman mo! ⚡🤣",
+            "Ang pagmamahal ko sa'yo parang Jollibee fries—kahit malamig na, gusto ko pa rin. 🍟❤️"
+        ];
+
+        let messageIndex = 0;
+
+        function showSurprise() {
+            let messageElement = document.getElementById('message-text');
+            let messageCard = document.querySelector('.message-card');
+            messageCard.style.display = 'block';
+            messageIndex = Math.floor(Math.random() * messages.length); 
+            messageElement.innerText = messages[messageIndex];
+
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = ' 𓆩💕𓆪';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+        setInterval(createHeart, 300);
+
+        const noButton = document.getElementById('noButton');
+        noButton.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+        });
+        function shuffleMessage() {
+        messageIndex = Math.floor(Math.random() * messages.length); 
+        document.getElementById('message-text').innerText = messages[messageIndex];
+    }
+    function toggleMusic() {
+    let music = document.getElementById('bgMusic');
+    if (music.paused) {
+        music.play();
+    } else {
+        music.pause();
+    }
+}
+
+
+
+
+    
+    </script>
+
+</body>
+</html>
